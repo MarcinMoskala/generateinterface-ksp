@@ -7,14 +7,19 @@ import academy.kt.GenerateInterface
 class User(val id: String)
 
 @GenerateInterface("UserRepository")
-class MongoUserRepository: UserRepository {
+class MongoUserRepository : UserRepository {
     override fun findUser(userId: String): User? = TODO()
     override fun findUsers(): List<User> = TODO()
-    override fun updateUser(user: User) { TODO() }
-    override fun insertUser(user: User) { TODO() }
+    override fun updateUser(user: User) {
+        TODO()
+    }
+
+    override fun insertUser(user: User) {
+        TODO()
+    }
 }
 
-class FakeUserRepository: UserRepository {
+class FakeUserRepository : UserRepository {
     private var users = listOf<User>()
 
     override fun findUser(userId: String): User? =

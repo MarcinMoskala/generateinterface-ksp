@@ -13,5 +13,6 @@ class GenerateInterfaceProcessorProvider : SymbolProcessorProvider {
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor =
         GenerateInterfaceProcessor(
             codeGenerator = environment.codeGenerator,
+            logger = environment.logger
         )
 }

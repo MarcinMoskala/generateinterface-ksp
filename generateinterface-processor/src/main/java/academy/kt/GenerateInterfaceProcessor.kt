@@ -3,7 +3,6 @@
 
 package academy.kt
 
-import academy.kt.GenerateInterface
 import com.google.devtools.ksp.*
 import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.*
@@ -16,12 +15,14 @@ import java.nio.charset.StandardCharsets
 @OptIn(KspExperimental::class)
 class GenerateInterfaceProcessor(
     private val codeGenerator: CodeGenerator,
+    private val logger: KSPLogger,
 ) : SymbolProcessor {
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
         resolver
             .getSymbolsWithAnnotation(GenerateInterface::class.qualifiedName!!)
             .filterIsInstance<KSClassDeclaration>()
+            .also { logger.warn("Generating for ${it.joinToString { it.simpleName.getShortName() }}") }
             .forEach(::generateInterface)
 
         return emptyList()
@@ -45,7 +46,8 @@ class GenerateInterfaceProcessor(
         val fileSpec = buildInterfaceFile(interfacePackage, interfaceName, publicMethods)
 
         // Inlined fileSpec.writeTo(codeGenerator, fileSpec.kspDependencies(true))
-        val file = codeGenerator.createNewFile(fileSpec.kspDependencies(true), fileSpec.packageName, fileSpec.name)
+        val dependencies = Dependencies(false, annotatedClass.containingFile!!)
+        val file = codeGenerator.createNewFile(dependencies, fileSpec.packageName, fileSpec.name)
         OutputStreamWriter(file, StandardCharsets.UTF_8)
             .use(fileSpec::writeTo)
     }
