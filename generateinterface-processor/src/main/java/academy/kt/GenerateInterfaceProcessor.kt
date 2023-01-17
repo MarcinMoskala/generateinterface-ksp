@@ -20,10 +20,10 @@ class GenerateInterfaceProcessor(
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
         resolver
-            .getSymbolsWithAnnotation("academy.kt.GenerateInterface")
+            .getSymbolsWithAnnotation(GenerateInterface::class.qualifiedName.toString())
             .filterIsInstance<KSClassDeclaration>()
             // Keeping this logging to make it possible to observe incremental build
-//            .also { logger.warn("Generating for ${it.joinToString { it.simpleName.getShortName() }}") }
+            .also { logger.warn("Generating for ${it.joinToString { it.simpleName.getShortName() }}") }
             .forEach(::generateInterface)
 
         return emptyList()
