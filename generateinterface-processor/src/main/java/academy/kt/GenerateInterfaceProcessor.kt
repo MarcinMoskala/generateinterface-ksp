@@ -20,10 +20,10 @@ class GenerateInterfaceProcessor(
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
         resolver
-            .getSymbolsWithAnnotation(GenerateInterface::class.qualifiedName!!)
+            .getSymbolsWithAnnotation("academy.kt.GenerateInterface")
             .filterIsInstance<KSClassDeclaration>()
             // Keeping this logging to make it possible to observe incremental build
-            .also { logger.warn("Generating for ${it.joinToString { it.simpleName.getShortName() }}") }
+//            .also { logger.warn("Generating for ${it.joinToString { it.simpleName.getShortName() }}") }
             .forEach(::generateInterface)
 
         return emptyList()
@@ -48,7 +48,7 @@ class GenerateInterfaceProcessor(
 
         val dependencies = Dependencies(aggregating = false, annotatedClass.containingFile!!)
         // Inlined fileSpec.writeTo(codeGenerator, dependencies)
-        val file = codeGenerator.createNewFile(dependencies, fileSpec.packageName, fileSpec.name)
+         val file = codeGenerator.createNewFile(dependencies, fileSpec.packageName, fileSpec.name)
         OutputStreamWriter(file, StandardCharsets.UTF_8)
             .use(fileSpec::writeTo)
     }

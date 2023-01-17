@@ -6,6 +6,11 @@ import academy.kt.GenerateInterface
 
 class User(val id: String)
 
+@academy.kt.GenerateInterface("TestRepository")
+class RealTestRepository {
+    fun a() {}
+}
+
 @GenerateInterface("UserRepository")
 class MongoUserRepository : UserRepository {
     override fun findUser(userId: String): User? = TODO()

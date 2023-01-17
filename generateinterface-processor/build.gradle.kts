@@ -12,6 +12,9 @@ dependencies {
     implementation("com.squareup:kotlinpoet-ksp:1.12.0")
     implementation(project(":generateinterface-annotations"))
     implementation("com.google.devtools.ksp:symbol-processing-api:1.6.20-1.0.5")
+    testImplementation(kotlin("test"))
+    testImplementation("com.github.tschuchortdev:kotlin-compile-testing:1.4.9")
+    testImplementation("com.github.tschuchortdev:kotlin-compile-testing-ksp:1.4.9")
 }
 
 tasks.getByName<Test>("test") {
