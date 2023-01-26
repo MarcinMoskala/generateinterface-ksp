@@ -41,6 +41,10 @@ class GenerateInterfaceProcessor(
             ?.getQualifier()
             .orEmpty()
 
+        if (interfaceName.isBlank()) {
+            throw Error("Interface name cannot be empty")
+        }
+
         val publicMethods = annotatedClass.getDeclaredFunctions()
             .filter { it.isPublic() && !it.isConstructor() }
 
