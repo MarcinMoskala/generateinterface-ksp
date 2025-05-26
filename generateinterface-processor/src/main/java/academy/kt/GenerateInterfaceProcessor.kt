@@ -51,10 +51,7 @@ class GenerateInterfaceProcessor(
         val fileSpec = buildInterfaceFile(interfacePackage, interfaceName, publicMethods)
 
         val dependencies = Dependencies(aggregating = false, annotatedClass.containingFile!!)
-        // Inlined fileSpec.writeTo(codeGenerator, dependencies)
-         val file = codeGenerator.createNewFile(dependencies, fileSpec.packageName, fileSpec.name)
-        OutputStreamWriter(file, StandardCharsets.UTF_8)
-            .use(fileSpec::writeTo)
+        fileSpec.writeTo(codeGenerator, dependencies)
     }
 
     private fun buildInterfaceFile(
